@@ -1,10 +1,26 @@
 {
   "name": "asio",
-  "version": "1.38.0.0",
+  "version": "1.38.0.2",
   "schemaVersion": 2,
   "kind": "HeaderOnlyLib",
-  "description": "Cross-platform async I/O library (standalone, non-Boost)",
+  "description": "Cross-platform async I/O library",
   "dependencies": {},
+
+  "options": {
+    "boost":         { "default": false, "allowed": [true, false] },
+    "no_deprecated": { "default": false, "allowed": [true, false] }
+  },
+
+  "compatibility": {
+    "compiler":         "exact",
+    "arch":             "any",
+    "compiler.version": "any",
+    "compiler.cppstd":  "lte",
+    "compiler.runtime": "any",
+    "options.boost": "exact",
+    "options.no_deprecated": "exact"
+  },
+
   "build": {
     "system": "cmake",
     "configs": [
@@ -13,7 +29,10 @@
       "RelWithDebInfo",
       "MinSizeRel"
     ],
-    "configure": [],
+    "configure": [
+      "-DASIO_USE_BOOST=${options.boost}",
+      "-DASIO_NO_DEPRECATED=${options.no_deprecated}"
+    ],
     "installDir": "install"
   }
 }
